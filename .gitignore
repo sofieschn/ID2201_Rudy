@@ -1,0 +1,8 @@
+# Ignore Erlang build artifacts
+*.beam
+ebin/
+_build/
+rebar.lock
+
+# Ignore macOS specific files
+.DS_Store
