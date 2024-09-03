@@ -42,5 +42,9 @@ header([C|R0]) -> % if it does not start with 13,10
     {Rest, R1} = header(R0), % function calls itself until all of header has been processed
     {[C|Rest], R1}. % returns completed header
 
-  
+% Cheating the reality by assuming everything following the headers is the body, however this is not very realistic
+message_body(R) -> % R here is the remaining part of input after parsing headers, we assume this contains the body of the request.
+    {R, []}.
+
+
 
