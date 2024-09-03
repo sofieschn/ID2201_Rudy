@@ -1,5 +1,5 @@
 -module(http).
--export([parse_request/1]).
+-export([parse_request/1, ok/1, get/1]).
 
 %Main function for parsing the request
 parse_request(R0) ->
@@ -46,5 +46,10 @@ header([C|R0]) -> % if it does not start with 13,10
 message_body(R) -> % R here is the remaining part of input after parsing headers, we assume this contains the body of the request.
     {R, []}.
 
+ok(Body) ->
+    "HTTP/1.1 200 OK\r\n" ++ "\r\n" ++ Body.
+
+get(URI) ->
+    "GET " ++ URI ++ " HTTP/1.1\r\n" ++ "\r\n".
 
 
