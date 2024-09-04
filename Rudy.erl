@@ -1,5 +1,14 @@
 -module(rudy).
--export([init/1, handler/1, request/1, reply/1]).
+-export([init/1, handler/1, request/1, reply/1, start/1, stop/0]).
+
+
+% Start the server on a specified port
+start(Port) ->
+    register(rudy, spawn(fun() -> init(Port) end)).
+
+% Stop the server by killing the registered process
+stop() ->
+    exit(whereis(rudy), "time to die").
 
 % Initialize the server and start listening on a port
 init(Port) ->
@@ -22,7 +31,7 @@ handler(Listen) ->
             io:format("Client connected~n"),
             request(Client),  % Handle the request
             gen_tcp:close(Client),  % Close the client socket after handling the request
-            handler(Listen);  % Wait for the next connection
+            handler(Listen); % Recursively calls itself to listen for new connections
         {error, Error} ->
             io:format("rudy: error: ~w~n", [Error])
     end.
