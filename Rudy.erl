@@ -8,7 +8,7 @@ start(Port) ->
 
 % Stop the server by killing the registered process
 stop() ->
-    exit(whereis(rudy), "time to die").
+    exit(whereis(rudy), "time to die"). 
 
 % Initialize the server and start listening on a port
 init(Port) ->
@@ -54,10 +54,20 @@ request(Client) ->
     end,
     gen_tcp:close(Client).
 
-
+% Old reply function below 
 % Generate a response based on the request
-reply({{get, URI, _Version}, _Headers, _Body}) ->
-    http:ok("You requested " ++ URI);  % Simple response with the requested URI
-reply(_) ->
-    http:ok("Unknown request").  % Fallback for other types of requests
+% reply({{get, URI, _Version}, _Headers, _Body}) ->
+    % http:ok("You requested " ++ URI);  % Simple response with the requested URI
+% reply(_) ->
+    % http:ok("Unknown request").  % Fallback for other types of requests
 
+% New reply function below 
+reply({{get, URI, _Version}, _Headers, _Body}) ->
+    timer:sleep(40),  % Simulate a 40ms delay 
+    http:ok("You requested " ++ URI);
+reply({{get, "/sofie", _Version}, _Headers, _Body}) -> % testing testing
+    timer:sleep(40),  % Simulate a 40ms delay 
+    http:ok("Hello, Sofie! This is your custom response.");
+reply(_) ->
+    timer:sleep(40),  % Add delay even for unknown requests
+    http:ok("Unknown request").
