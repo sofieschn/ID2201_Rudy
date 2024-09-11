@@ -18,7 +18,7 @@ run(N, Host, Port) ->
 request(Host, Port) ->
     Opt = [list, {active, false}, {reuseaddr, true}],
     {ok, Server} = gen_tcp:connect(Host, Port, Opt), % est TCP connection to the server at spec host and port 
-    gen_tcp:send(Server, http:get("foo")), % sends a http GET request for foo    
+   % gen_tcp:send(Server, http:get("foo")), % sends a http GET request for foo    
     gen_tcp:send(Server, http:get("sofie")), % sends a http GET request for sofie TESTING
     Recv = gen_tcp:recv(Server, 0),
     case Recv of

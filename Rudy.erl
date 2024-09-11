@@ -62,12 +62,13 @@ request(Client) ->
     % http:ok("Unknown request").  % Fallback for other types of requests
 
 % New reply function below 
-reply({{get, URI, _Version}, _Headers, _Body}) ->
-    timer:sleep(40),  % Simulate a 40ms delay 
-    http:ok("You requested " ++ URI);
+% reply({{get, URI, _Version}, _Headers, _Body}) ->
+    % timer:sleep(40),  % Simulate a 40ms delay 
+    % http:ok("You requested " ++ URI);
 reply({{get, "/sofie", _Version}, _Headers, _Body}) -> % testing testing
     timer:sleep(40),  % Simulate a 40ms delay 
     http:ok("Hello, Sofie! This is your custom response.");
 reply(_) ->
     timer:sleep(40),  % Add delay even for unknown requests
     http:ok("Unknown request").
+
